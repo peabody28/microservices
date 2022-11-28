@@ -1,0 +1,24 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "description": "web",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "axios": "^1.1.3",
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.0",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-beta6",
+    "request": "^2.88.2",
+    "serve-favicon": "^2.3.0",
+    "sync-request": "^6.1.0"
+  }
+}

@@ -1,0 +1,51 @@
+version: "3"
+services:
+  rs:
+    build:
+        context: .
+        dockerfile: ./risk.score/Dockerfile
+    volumes:
+      - ./risk.score/db:/app/db 
+    ports:
+      - "80:80"
+
+  user:
+    build:
+        context: .
+        dockerfile: ./user/Dockerfile
+    volumes:
+      - ./user/db:/app/db 
+    ports:
+      - "81:80"
+      
+  wallet:
+    build:
+        context: .
+        dockerfile: ./wallet/Dockerfile
+    volumes:
+      - ./wallet/db:/app/db 
+    ports:
+      - "82:80"
+      
+  payment:
+    build:
+        context: .
+        dockerfile: ./payment/Dockerfile
+    volumes:
+      - ./payment/db:/app/db 
+    ports:
+      - "83:80"
+
+  auth:
+    build:
+        context: .
+        dockerfile: ./auth/Dockerfile
+    ports:
+      - "84:80"
+
+  web:
+    build:
+        context: .
+        dockerfile: ./web/Dockerfile
+    ports:
+      - "1337:8080"
