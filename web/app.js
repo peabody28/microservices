@@ -11,6 +11,7 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var main = require('./routes/main');
 var payment = require('./routes/payment');
+var wallet = require('./routes/wallet');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/', routes);
 app.use('/login', login);
 app.use('/main', main);
 app.use('/payment', payment);
+app.use('/wallet', wallet);
 
 
 // catch 404 and forward to error handler

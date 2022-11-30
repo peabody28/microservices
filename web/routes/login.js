@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
+var api = require('./../constants/apiRoutes')
 
 const urlencodedParser = express.urlencoded({ extended: false });
 
@@ -13,7 +14,7 @@ router.get('/', function (req, res) {
 router.post('/', urlencodedParser, async function (req, res) {
     if (!req.body) return res.sendStatus(400);
 
-    await axios.post('http://wsl:84/auth/token', {
+    await axios.post(api.auth.token, {
         name: req.body.userName,
         password: req.body.password
     })

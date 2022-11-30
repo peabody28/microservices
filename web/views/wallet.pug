@@ -1,0 +1,21 @@
+
+doctype html
+html
+  head
+    title= Payment
+    link(rel='stylesheet', href='/stylesheets/main.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js')
+  body
+    p
+        | Wallets
+        br
+        div#wallets
+            each wallet in wallets
+                li= wallet.number
+        br
+
+    form(id='createWalletForm')
+        input(type='submit', value='Create Wallet')
+    div#message
+
+    script(src='javascripts/wallet.js')

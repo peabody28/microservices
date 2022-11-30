@@ -30,11 +30,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="constants\apiRoutes.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="helpers\httpHelper.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\javascripts\wallet.js" />
     <Content Include="public\javascripts\payment.js" />
     <Content Include="public\javascripts\login.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="routes\index.js" />
+    <Content Include="routes\wallet.js" />
     <Content Include="routes\payment.js" />
     <Content Include="routes\login.js">
       <SubType>Code</SubType>
@@ -50,6 +58,7 @@
     </Content>
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
+    <Content Include="views\wallet.pug" />
     <Content Include="views\payment.pug" />
     <Content Include="views\login.html">
       <SubType>Code</SubType>
@@ -60,6 +69,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="constants\" />
+    <Folder Include="helpers\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

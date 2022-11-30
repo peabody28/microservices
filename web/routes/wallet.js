@@ -1,5 +1,4 @@
 'use strict';
-var path = require('path');
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
@@ -16,26 +15,21 @@ router.get('/', async function (req, res) {
         httpHelper.getAuthHeader(req.cookies.accessToken)).then(function (response)
     {
         wallets = response.data
+
     }).catch(function (response) {
         res.status(400).json(response);
     });
 
-    res.render("payment", { wallets: wallets });
+    res.render("wallet", { wallets: wallets });
 });
 
-router.post('/', urlencodedParser, async function (req, res) {
+router.post('/create', urlencodedParser, async function (req, res) {
     if (!req.body) return res.sendStatus(400);
 
-    var data = {
-        walletNumber: req.body.wallet,
-        amount: req.body.amount,
-        balanceOperationTypeCode: req.body.balanceOperationType
-    }
-
-    await axios.post(api.payment.create, data,
+    await axios.post(api.wallet.create, {},
         httpHelper.getAuthHeader(req.cookies.accessToken)).then(function (response)
     {
-        res.status(200).json({ status: true })
+        res.status(200).json({ status: true, number: response.data.number })
 
     }).catch(function (response) {
         res.status(400).json(response);
