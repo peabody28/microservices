@@ -18,7 +18,7 @@ namespace auth.Operations
 
         public async Task<UserModel> GetUser(string username, string password)
         {
-            var url = Configuration.GetSection("Service:User:Method:Info").Value;
+            var url = Configuration.GetSection("Service:User:Method:Login").Value;
 
             var data = new JsonObject { { "name", username }, { "password", password } };
 

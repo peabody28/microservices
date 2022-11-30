@@ -18,7 +18,7 @@ namespace payment.NancyModels
 
                 var model = this.Bind<PaymentModel>();
 
-                var wallet = await walletRepository.Object(model.WalletNumber) ?? await walletOperation.Create(model.WalletNumber);
+                var wallet = await walletOperation.Get(model.WalletNumber);
                 if(wallet == null)
                     return Response.AsJson(new ErrorModel { Error = "WALLET_NOT_FOUND" }, HttpStatusCode.BadRequest);
 

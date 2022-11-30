@@ -26,7 +26,7 @@ namespace wallet.Operations
         {
             return await Container.InTransaction(() =>
             {
-                var user = UserRepository.Create(username).Result;
+                var user = UserRepository.Object(username).Result ?? UserRepository.Create(username).Result;
 
                 var number = GenerateNumber();
                 var wallet = WalletRepository.Create(user, number).Result;

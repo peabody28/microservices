@@ -28,7 +28,6 @@ namespace payment
             base.ConfigureApplicationContainer(container);
             container.Register(_serviceProvider.GetRequiredService<IConfiguration>());
             container.Register(_serviceProvider.GetRequiredService<IServiceProvider>());
-            container.Register(_serviceProvider.GetRequiredService<IHttpContextAccessor>());
             container.Register(_serviceProvider.GetRequiredService<PaymentDbContext>());
         }
 
@@ -54,6 +53,6 @@ namespace payment
             };
 
             pipelines.EnableJwtBearerAuthentication(x);
-        }
+        }        
     }
 }

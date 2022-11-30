@@ -36,17 +36,6 @@ namespace user
             {
                 var model = this.Bind<UserModel>();
 
-                var user = await userRepository.Object(model.Name);
-                if(user == null)
-                    return Response.AsJson(new ErrorModel { Error = "USER_NOT_FOUND" }, HttpStatusCode.BadRequest);
-
-                return Response.AsJson(user.Id);
-            });
-
-            Post("/info", async _ =>
-            {
-                var model = this.Bind<UserModel>();
-
                 var user = await userRepository.Object(model.Name, model.Password);
                 if (user == null)
                     return Response.AsJson(new ErrorModel { Error = "USER_NOT_FOUND" }, HttpStatusCode.BadRequest);

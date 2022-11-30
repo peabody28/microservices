@@ -4,6 +4,6 @@ namespace payment.Interfaces.Operations
 {
     public interface IWalletOperation
     {
-        Task<IWallet> Create(string walletNumber);
+        Task<IWallet> Get(string walletNumber);
     }
 }

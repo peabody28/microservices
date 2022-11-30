@@ -31,14 +31,16 @@ namespace wallet.Repositories
             return wallet.Entity;
         }
 
-        public async Task<IWallet> Object(string username)
+        public async Task<IEnumerable<IWallet>> Collection(IUser user)
         {
-            return await DbContext.Wallet.Include(wallet => wallet.User).AsAsyncEnumerable().FirstOrDefaultAsync(wallet => wallet.User.Name.Equals(username));
+            if (user == null)
+                return null;
+            return await DbContext.Wallet.Include(wallet => wallet.User).AsAsyncEnumerable().Where(wallet => wallet.User.Id.Equals(user.Id)).ToListAsync();
         }
 
-        public async Task<IWallet> ObjectByNumber(string number)
+        public async Task<IWallet> Object(IUser user, string number)
         {
-            return await DbContext.Wallet.AsAsyncEnumerable().FirstOrDefaultAsync(wallet => wallet.Number.Equals(number));
+            return await DbContext.Wallet.AsAsyncEnumerable().FirstOrDefaultAsync(wallet => wallet.Number.Equals(number) && wallet.User.Id.Equals(user.Id));
         }
     }
 }

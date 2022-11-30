@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Autofac.Core.Lifetime;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using Nancy;
 using Nancy.Authentication.JwtBearer;
 using Nancy.Bootstrapper;
@@ -30,8 +28,6 @@ namespace wallet
             base.ConfigureApplicationContainer(container);
             container.Register(_serviceProvider.GetRequiredService<IConfiguration>());
             container.Register(_serviceProvider.GetRequiredService<IServiceProvider>());
-            container.Register(_serviceProvider.GetRequiredService<IHttpContextAccessor>());
-            
             container.Register(_serviceProvider.GetRequiredService<WalletDbContext>());
         }
 

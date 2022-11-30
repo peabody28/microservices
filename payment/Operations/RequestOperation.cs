@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using payment.Interfaces.Operations;
-using Nancy;
+using payment.Interfaces.Common;
+using System.Net;
 
 namespace payment.Operations
 {
@@ -8,12 +9,12 @@ namespace payment.Operations
     {
         private HttpClient HttpClient;
 
-        public IHttpContextAccessor HttpContextAccessor { get; set; }
+        public ICurrentRequest CurrentRequest { get; set; }
 
-        public RequestOperation(HttpClient _httpClient, IHttpContextAccessor httpContextAccessor)
+        public RequestOperation(HttpClient _httpClient, ICurrentRequest currentRequest)
         {
             HttpClient = _httpClient;
-            HttpContextAccessor = httpContextAccessor;
+            CurrentRequest = currentRequest;
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace payment.Operations
                 var request = new HttpRequestMessage(HttpMethod.Get, uri);
 
                 if(isAuthenticationNeed)
-                    request.Headers.Add("Authorization", string.Concat("Bearer ", HttpContextAccessor.HttpContext.Request.Headers.Authorization.ToString()));
+                    request.Headers.Add("Authorization", CurrentRequest.Context.Request.Headers.Authorization);
 
                 using var response = await HttpClient.SendAsync(request);
 

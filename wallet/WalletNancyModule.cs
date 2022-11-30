@@ -23,29 +23,26 @@ namespace wallet
 
         public WalletNancyModule(IWalletOperation walletOperation, IWalletRepository walletRepository, IUserRepository userRepository) : base("/wallet")
         {
+            UserRepository = userRepository;
 
             Post("/create", async _ =>
             {
                 var model = this.Bind<UserModel>();
 
-                var existingEntity = await walletRepository.Object(model.Name);
-                if (existingEntity != null)
-                    return Response.AsJson(new ErrorModel { Error = "WALLET_ALREADY_EXIST" }, HttpStatusCode.BadRequest);
-
                 var wallet = await walletOperation.Create(model.Name);
 
-                return Response.AsJson(new WalletModel { Username = wallet.User.Name, Number = wallet.Number });
+                return Response.AsJson(new WalletModel { Number = wallet.Number });
             });
 
             Get("/get", async _ =>
             {
                 this.RequiresAuthentication();
 
-                var wallet = await walletRepository.Object(CurrentUser.Name);
-                if(wallet == null)
-                    return Response.AsJson(new ErrorModel { Error = "WALLET_NOT_FOUND" }, HttpStatusCode.BadRequest);
+                var wallets = await walletRepository.Collection(CurrentUser);
+                if(wallets == null || !wallets.Any())
+                    return Response.AsJson(new ErrorModel { Error = "WALLETS_NOT_FOUND" }, HttpStatusCode.BadRequest);
 
-                return Response.AsJson(new WalletModel { Username = wallet.User.Name, Number = wallet.Number });
+                return Response.AsJson(wallets.Select(wallet => new WalletModel { Number = wallet.Number }));
             });
 
             Get("/isExist", async _ =>
@@ -54,7 +51,7 @@ namespace wallet
 
                 var model = this.Bind<WalletNumberModel>();
 
-                var wallet = await walletRepository.ObjectByNumber(model.Number);
+                var wallet = await walletRepository.Object(CurrentUser, model.Number);
                 if (wallet == null)
                     return Response.AsJson(new ErrorModel { Error = "WALLET_NOT_FOUND" }, HttpStatusCode.BadRequest);
 

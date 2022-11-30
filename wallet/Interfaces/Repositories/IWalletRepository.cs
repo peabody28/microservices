@@ -6,8 +6,8 @@ namespace wallet.Interfaces.Repositories
     {
         Task<IWallet> Create(IUser user, string number);
 
-        Task<IWallet> Object(string name);
+        Task<IEnumerable<IWallet>> Collection(IUser user);
 
-        Task<IWallet> ObjectByNumber(string number);
+        Task<IWallet> Object(IUser user, string number);
     }
 }

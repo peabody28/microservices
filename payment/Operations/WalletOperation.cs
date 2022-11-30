@@ -15,12 +15,16 @@ namespace payment.Operations
             WalletRepository = walletRepository;
             WalletApiOperation = walletApiOperation;
         }
-
-        public async Task<IWallet> Create(string walletNumber)
+        
+        public async Task<IWallet> Get(string walletNumber)
         {
             var isWalletExist = await WalletApiOperation.IsWalletExist(walletNumber);
             if (!isWalletExist)
                 return null;
+
+            var wallet = await WalletRepository.Object(walletNumber);
+            if (wallet != null)
+                return wallet;
 
             return await WalletRepository.Create(walletNumber);
         }

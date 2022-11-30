@@ -25,7 +25,6 @@ builder.Services.Configure<IISServerOptions>(options =>
 builder.Services.AddTransient<IUser, UserEntity>();
 builder.Services.AddTransient<IRole, RoleEntity>();
 
-
 builder.Services.AddSingleton<UserDbContext, UserDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
