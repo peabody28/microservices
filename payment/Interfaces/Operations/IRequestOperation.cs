@@ -2,6 +2,6 @@
 {
     public interface IRequestOperation
     {
-        Task<bool> Get(string url, IDictionary<string, string> data);
+        Task<bool> Get(string url, IDictionary<string, string> data, bool isAuthenticationNeed = true);
     }
 }

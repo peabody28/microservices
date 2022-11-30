@@ -22,6 +22,8 @@ builder.Services.Configure<IISServerOptions>(options =>
     options.AllowSynchronousIO = true;
 });
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddTransient<IWallet, WalletEntity>();
 builder.Services.AddTransient<IBalanceOperationType, BalanceOperationTypeEntity>();
 builder.Services.AddTransient<IPayment, PaymentEntity>();

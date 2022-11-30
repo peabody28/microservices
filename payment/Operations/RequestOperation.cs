@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using System.Net;
 using payment.Interfaces.Operations;
+using Nancy;
 
 namespace payment.Operations
 {
@@ -8,9 +8,12 @@ namespace payment.Operations
     {
         private HttpClient HttpClient;
 
-        public RequestOperation(HttpClient _httpClient)
+        public IHttpContextAccessor HttpContextAccessor { get; set; }
+
+        public RequestOperation(HttpClient _httpClient, IHttpContextAccessor httpContextAccessor)
         {
             HttpClient = _httpClient;
+            HttpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -19,13 +22,18 @@ namespace payment.Operations
         /// <param name="url"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public async Task<bool> Get(string url, IDictionary<string, string> data)
+        public async Task<bool> Get(string url, IDictionary<string, string> data, bool isAuthenticationNeed = true)
         {
             try
             {
                 var uri = new Uri(QueryHelpers.AddQueryString(url, data));
 
-                using var response = await HttpClient.GetAsync(uri);
+                var request = new HttpRequestMessage(HttpMethod.Get, uri);
+
+                if(isAuthenticationNeed)
+                    request.Headers.Add("Authorization", string.Concat("Bearer ", HttpContextAccessor.HttpContext.Request.Headers.Authorization.ToString()));
+
+                using var response = await HttpClient.SendAsync(request);
 
                 if (response.StatusCode.Equals(HttpStatusCode.OK))
                     return true;

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Nancy;
 using Nancy.Owin;
 using wallet;
 using wallet.Entities;
@@ -21,6 +22,8 @@ builder.Services.Configure<IISServerOptions>(options =>
 {
     options.AllowSynchronousIO = true;
 });
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<IUser, UserEntity>();
 builder.Services.AddTransient<IWallet, WalletEntity>();
