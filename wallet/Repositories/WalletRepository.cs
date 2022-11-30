@@ -40,6 +40,9 @@ namespace wallet.Repositories
 
         public async Task<IWallet> Object(IUser user, string number)
         {
+            if (user == null)
+                return null;
+
             return await DbContext.Wallet.AsAsyncEnumerable().FirstOrDefaultAsync(wallet => wallet.Number.Equals(number) && wallet.User.Id.Equals(user.Id));
         }
     }

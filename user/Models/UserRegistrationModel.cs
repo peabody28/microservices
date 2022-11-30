@@ -6,9 +6,5 @@ namespace user.Models
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        [JsonProperty("wallet")]
-        public string Wallet { get; set; }
-
     }
 }

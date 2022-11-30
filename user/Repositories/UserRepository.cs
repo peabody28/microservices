@@ -26,7 +26,7 @@ namespace user.Repositories
         public async Task<IUser> Object(string name, string password)
         {
             var passwordHash = MD5Helper.Hash(password);
-            return await DbContext.User.AsAsyncEnumerable().FirstOrDefaultAsync(user => user.Name.Equals(name) && user.PasswordHash.Equals(passwordHash));
+            return await DbContext.User.Include(user => user.Role).AsAsyncEnumerable().FirstOrDefaultAsync(user => user.Name.Equals(name) && user.PasswordHash.Equals(passwordHash));
         }
 
         public async Task<IUser> Create(string name, string password, IRole role)

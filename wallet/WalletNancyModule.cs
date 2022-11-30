@@ -27,9 +27,10 @@ namespace wallet
 
             Post("/create", async _ =>
             {
-                var model = this.Bind<UserModel>();
+                this.RequiresAuthentication();
 
-                var wallet = await walletOperation.Create(model.Name);
+                var username = Context.CurrentUser.FindFirstValue(ClaimsIdentity.DefaultNameClaimType);
+                var wallet = await walletOperation.Create(username);
 
                 return Response.AsJson(new WalletModel { Number = wallet.Number });
             });

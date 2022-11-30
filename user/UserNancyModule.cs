@@ -8,7 +8,7 @@ namespace user
 {
     public class UserNancyModule : NancyModule
     {
-        public UserNancyModule(IRiskScoreApiOperation riskScoreApiOperation, IWalletApiOperation walletApiOperation, IUserRepository userRepository, IRoleRepository roleRepository) : base("/user")
+        public UserNancyModule(IRiskScoreApiOperation riskScoreApiOperation, IUserRepository userRepository, IRoleRepository roleRepository) : base("/user")
         {
             Post("/register", async _ =>
             {
@@ -22,14 +22,10 @@ namespace user
                 if(existingEntity != null)
                     return Response.AsJson(new ErrorModel { Error = "USER_ALREADY_EXISTS" }, HttpStatusCode.BadRequest);
 
-                var wallet = await walletApiOperation.Create(model.Name);
-                if(wallet == null)
-                    return Response.AsJson(new ErrorModel { Error = "CANNOT_REGISTRATE_THIS_USER" }, HttpStatusCode.InternalServerError);
-
                 var role = await roleRepository.Object("Default");
                 var user = await userRepository.Create(model.Name, model.Password, role);
 
-                return Response.AsJson(new UserRegistrationModel { Name = model.Name, Wallet = wallet.Number });
+                return Response.AsJson(new UserRegistrationModel { Name = model.Name });
             });
 
             Post("/login", async _ =>
