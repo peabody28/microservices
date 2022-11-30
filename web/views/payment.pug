@@ -1,0 +1,30 @@
+
+doctype html
+html
+  head
+    title= Payment
+    link(rel='stylesheet', href='/stylesheets/main.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js')
+  body
+    h1 Введите данные
+
+    form(id='paymentForm')
+        p
+          | Wallet:
+          select(name="wallet" id="wallet")
+            each wallet in wallets
+                option(value=wallet.number)=wallet.number
+          br
+          | Amount: 
+          input(type='text', name='amount')
+          br
+          | Credit: 
+          input(type='radio', name='balanceOperationType', value='Credit')
+          br
+          | Debit: 
+          input(type='radio', name='balanceOperationType', value='Debit')
+          br
+        input(type='submit', value='Submit')
+    div#message
+
+    script(src='javascripts/payment.js')
