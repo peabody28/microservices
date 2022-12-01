@@ -11,7 +11,7 @@
             "preLaunchTask": "build auth",
             "program": "${workspaceFolder}/auth/bin/Debug/net6.0/auth.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/auth",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -31,7 +31,7 @@
             "preLaunchTask": "build payment",
             "program": "${workspaceFolder}/payment/bin/Debug/net6.0/payment.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/payment",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -51,7 +51,47 @@
             "preLaunchTask": "build user",
             "program": "${workspaceFolder}/user/bin/Debug/net6.0/user.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/user",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "wallet",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build wallet",
+            "program": "${workspaceFolder}/wallet/bin/Debug/net6.0/wallet.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/wallet",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "risk.score",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build risk.score",
+            "program": "${workspaceFolder}/risk.score/bin/Debug/net6.0/risk.score.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/risk.score",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
