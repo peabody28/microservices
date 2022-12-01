@@ -1,17 +1,14 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "auth",
+            "name": "web api",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build auth",
-            "program": "${workspaceFolder}/auth/bin/Debug/net6.0/auth.dll",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/${input:projectName}/bin/Debug/net6.0/${input:projectName}.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/auth",
+            "cwd": "${workspaceFolder}/${input:projectName}",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -22,92 +19,22 @@
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
-            }
+            },
         },
+    ],
+    "inputs": [
         {
-            "name": "payment",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build payment",
-            "program": "${workspaceFolder}/payment/bin/Debug/net6.0/payment.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/payment",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
+          "type": "pickString",
+          "id": "projectName",
+          "description": "What project yoy want to start?",
+          "options": [
+            "auth",
+            "wallet",
+            "risk.score",
+            "payment",
+            "user"
+          ],
+          "default": "user"
         },
-        {
-            "name": "user",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build user",
-            "program": "${workspaceFolder}/user/bin/Debug/net6.0/user.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/user",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": "wallet",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build wallet",
-            "program": "${workspaceFolder}/wallet/bin/Debug/net6.0/wallet.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/wallet",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": "risk.score",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build risk.score",
-            "program": "${workspaceFolder}/risk.score/bin/Debug/net6.0/risk.score.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/risk.score",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
-        }
     ]
 }
