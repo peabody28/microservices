@@ -2,7 +2,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "web api",
+            "name": "web",
+            "program": "app.js",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/web",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "name": "api",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
