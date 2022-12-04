@@ -18,13 +18,13 @@ namespace payment.Operations
         
         public async Task<IWallet> Get(string walletNumber)
         {
-            var isWalletExist = await WalletApiOperation.IsWalletExist(walletNumber);
-            if (!isWalletExist)
-                return null;
-
             var wallet = await WalletRepository.Object(walletNumber);
             if (wallet != null)
                 return wallet;
+
+            var isWalletExist = await WalletApiOperation.IsWalletExist(walletNumber);
+            if (!isWalletExist)
+                return null;
 
             return await WalletRepository.Create(walletNumber);
         }
