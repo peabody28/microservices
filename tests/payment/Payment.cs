@@ -20,6 +20,8 @@ namespace tests.payment
 
         private IWalletOperation WalletOperation { get; set; }
 
+        private IWalletRepository WalletRepository { get; set; }
+
         private IPaymentRepository PaymentRepository { get; set; }
 
         private IBalanceOperationTypeRepository BalanceOperationTypeRepository { get; set; }
@@ -41,7 +43,7 @@ namespace tests.payment
             serviceProvider.Setup(x => x.GetService(typeof(IPayment))).Returns(new PaymentEntity());
 
             var dbContext = new PaymentDbContext(Configuration);
-            var walletRepository = new WalletRepository(dbContext, serviceProvider.Object);
+            WalletRepository = new WalletRepository(dbContext, serviceProvider.Object);
             BalanceOperationTypeRepository = new BalanceOperationTypeRepository(dbContext);
             PaymentRepository = new PaymentRepository(dbContext, serviceProvider.Object);
 
@@ -51,11 +53,11 @@ namespace tests.payment
 
             var requestOperation = new RequestOperation(client, new CurrentRequest(nancyContext));
             var walletApiOperation = new WalletApiOperation(requestOperation, Configuration);
-            WalletOperation = new WalletOperation(walletApiOperation, walletRepository);
+            WalletOperation = new WalletOperation(walletApiOperation, WalletRepository);
         }
 
         [Test]
-        public void CheckWallet([Values("WALLET")] string wallet, [Values(true, false)] bool isExists)
+        public void CheckWallet([Values("WALLET")] string wallet, [Values(true, false)] bool isExistsInExternalService)
         {
             // register mock for IsExists Http request
 
@@ -64,19 +66,20 @@ namespace tests.payment
             var uri = new Uri(QueryHelpers.AddQueryString(url, data));
 
             MockHttpMessageHandler.When(uri.ToString())
-                    .Respond(req => new HttpResponseMessage(isExists ? System.Net.HttpStatusCode.OK : System.Net.HttpStatusCode.BadRequest));
+                    .Respond(req => new HttpResponseMessage(isExistsInExternalService ? System.Net.HttpStatusCode.OK : System.Net.HttpStatusCode.BadRequest));
 
             // end registration
-
+            var existingEntity = WalletRepository.Object(wallet);
             var entity = WalletOperation.Get(wallet).Result;
-            if (isExists)
+
+            if (existingEntity != null || isExistsInExternalService)
                 Assert.NotNull(entity);
             else
                 Assert.Null(entity);
         }
 
         [Test]
-        public void CreatePaymentWallet([Values("WALLET")] string wallet, [Values(5)] decimal amount, [Values("Credit", "Debit", "None")] string botCode)
+        public void CreatePaymentWallet([Values("WALLE2T")] string wallet, [Values(5)] decimal amount, [Values("Credit", "Debit", "None")] string botCode)
         {
             var url = Configuration.GetSection("Service:Wallet:Method:IsExist").Value;
             var data = new Dictionary<string, string> { { "number", wallet } };
