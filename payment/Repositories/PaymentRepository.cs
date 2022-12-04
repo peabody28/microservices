@@ -19,6 +19,9 @@ namespace payment.Repositories
 
         public async Task<IPayment> Create(IWallet wallet, decimal amount, IBalanceOperationType balanceOperationType)
         {
+            if (wallet == null || balanceOperationType == null)
+                return null;
+
             var entity = Container.GetRequiredService<IPayment>();
             entity.Id = Guid.NewGuid();
             entity.Wallet = wallet;

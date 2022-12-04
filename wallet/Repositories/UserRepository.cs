@@ -18,6 +18,9 @@ namespace wallet.Repositories
 
         public async Task<IUser> Create(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
             var entity = Container.GetRequiredService<IUser>();
             entity.Id = Guid.NewGuid();
             entity.Name = name;

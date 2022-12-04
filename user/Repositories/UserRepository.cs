@@ -31,6 +31,9 @@ namespace user.Repositories
 
         public async Task<IUser> Create(string name, string password, IRole role)
         {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(password) || role == null)
+                return null;
+
             var entity = Container.GetRequiredService<IUser>();
             entity.Id = Guid.NewGuid();
             entity.Name = name;
