@@ -7,6 +7,7 @@ using payment.Common;
 using payment.Entities;
 using payment.Interfaces.Entities;
 using payment.Interfaces.Operations;
+using payment.Interfaces.Repositories;
 using payment.Operations;
 using payment.Repositories;
 using RichardSzalay.MockHttp;
@@ -18,6 +19,10 @@ namespace tests.payment
         private IConfiguration Configuration { get; set; }  
 
         private IWalletOperation WalletOperation { get; set; }
+
+        private IPaymentRepository PaymentRepository { get; set; }
+
+        private IBalanceOperationTypeRepository BalanceOperationTypeRepository { get; set; }
 
         private MockHttpMessageHandler MockHttpMessageHandler { get; set; }
 
@@ -32,12 +37,13 @@ namespace tests.payment
             Configuration.GetSection("ConnectionStrings:Payment").Value = "Filename=E:/work/sharp/microservices/payment/db/payment.db";
 
             var serviceProvider = new Mock<IServiceProvider>();
-            serviceProvider
-                .Setup(x => x.GetService(typeof(IWallet)))
-                .Returns(new WalletEntity());
+            serviceProvider.Setup(x => x.GetService(typeof(IWallet))).Returns(new WalletEntity());
+            serviceProvider.Setup(x => x.GetService(typeof(IPayment))).Returns(new PaymentEntity());
 
             var dbContext = new PaymentDbContext(Configuration);
             var walletRepository = new WalletRepository(dbContext, serviceProvider.Object);
+            BalanceOperationTypeRepository = new BalanceOperationTypeRepository(dbContext);
+            PaymentRepository = new PaymentRepository(dbContext, serviceProvider.Object);
 
             var client = new HttpClient(MockHttpMessageHandler);
             var nancyContext = new NancyContext() { Request = new Request("GET", string.Empty, HttpScheme.Http.ToString()) };
@@ -67,6 +73,26 @@ namespace tests.payment
                 Assert.NotNull(entity);
             else
                 Assert.Null(entity);
+        }
+
+        [Test]
+        public void CreatePaymentWallet([Values("WALLET")] string wallet, [Values(5)] decimal amount, [Values("Credit", "Debit", "None")] string botCode)
+        {
+            var url = Configuration.GetSection("Service:Wallet:Method:IsExist").Value;
+            var data = new Dictionary<string, string> { { "number", wallet } };
+            var uri = new Uri(QueryHelpers.AddQueryString(url, data));
+
+            MockHttpMessageHandler.When(uri.ToString())
+                    .Respond(req => new HttpResponseMessage(System.Net.HttpStatusCode.OK));
+
+            var walletEntity = WalletOperation.Get(wallet).Result;
+            var balanceOperationType = BalanceOperationTypeRepository.Object(botCode).Result;
+            var payment = PaymentRepository.Create(walletEntity, amount, balanceOperationType).Result;
+
+            if (balanceOperationType == null || walletEntity == null)
+                Assert.Null(payment);
+            else
+                Assert.NotNull(payment);
         }
     }
 }
