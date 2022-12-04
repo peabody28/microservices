@@ -20,7 +20,9 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "web", "web\web.njsproj", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "auth", "auth\auth.csproj", "{15EB889C-ADFB-40C4-AE44-D746C7D4A153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{9A109A74-3066-4E08-B114-73B41E19285A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{9A109A74-3066-4E08-B114-73B41E19285A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "payment.tests", "payment.tests\payment.tests.csproj", "{AA8B3374-1115-45CD-89E0-1711DB4B714B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{9A109A74-3066-4E08-B114-73B41E19285A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A109A74-3066-4E08-B114-73B41E19285A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A109A74-3066-4E08-B114-73B41E19285A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA8B3374-1115-45CD-89E0-1711DB4B714B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA8B3374-1115-45CD-89E0-1711DB4B714B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA8B3374-1115-45CD-89E0-1711DB4B714B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA8B3374-1115-45CD-89E0-1711DB4B714B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
