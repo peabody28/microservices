@@ -19,7 +19,7 @@ namespace payment.tests
         /// <br>Guarantees if the wallet exists in the some external system it will be raised</br>
         /// </summary>
         /// <param name="wallet"></param>
-        /// <param name="isExistsInExternalService">if true, then wallet exist in some wallet service</param>
+        /// <param name="isExistsInExternalService">if <see langword="true"/>, then wallet exist in some wallet service</param>
         [Test]
         public void GetWallet([Values("WALLET")] string walletNumber, [Values(true, false)] bool isExistsInExternalService)
         {
